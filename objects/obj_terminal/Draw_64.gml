@@ -1,0 +1,151 @@
+if (ativo)
+{
+    var _gw = display_get_gui_width();
+    var _gh = display_get_gui_height();
+
+    var _margem = 32;
+    var _x1 = _margem;
+    var _y1 = _margem;
+    var _x2 = _gw - _margem;
+    var _y2 = _gh - _margem;
+
+    var _meio = (_x1 + _x2) * 0.5;
+    var _pad = 20;
+    var _linha = 26;
+
+    // FUNDO DO TERMINAL
+    draw_set_alpha(1);
+    draw_set_color(make_color_rgb(12, 14, 18));
+    draw_rectangle(_x1, _y1, _x2, _y2, false);
+
+    draw_set_color(c_lime);
+    draw_rectangle(_x1, _y1, _x2, _y2, true);
+
+    // PAINEL ESQUERDO
+    draw_set_color(make_color_rgb(20, 24, 30));
+    draw_rectangle(
+        _x1 + 12, _y1 + 42,
+        _meio - 8, _y2 - 48, false
+    );
+
+    // PAINEL DIREITO
+    draw_set_color(make_color_rgb(17, 20, 24));
+    draw_rectangle(
+        _meio + 8, _y1 + 42,
+        _x2 - 12, _y2 - 48, false
+    );
+
+    draw_set_font(Font1);
+    draw_set_halign(fa_left);
+    draw_set_valign(fa_top);
+
+    // TITULOS
+    draw_set_color(c_lime);
+    draw_text(_x1 + _pad, _y1 + 12,
+        "CODIGO DO SISTEMA");
+
+    draw_set_color(c_aqua);
+    draw_text(_meio + _pad, _y1 + 12,
+        "SUA SOLUCAO");
+
+    // =================================
+    // ESQUERDA: CODIGO ORIGINAL
+    // =================================
+    var _cx = _x1 + _pad;
+    var _cy = _y1 + 60;
+
+    draw_set_color(c_gray);
+    draw_text(_cx, _cy,
+        "// Controle da porta");
+
+    draw_set_color(c_white);
+    draw_text(_cx, _cy + _linha,
+        "int porta = 0;");
+
+    draw_text(_cx, _cy + _linha * 2,
+        "if (porta == 1) {");
+
+    draw_set_color(c_lime);
+    draw_text(_cx, _cy + _linha * 3,
+        "    abrir_porta();");
+
+    draw_set_color(c_white);
+    draw_text(_cx, _cy + _linha * 4,
+        "}");
+
+    draw_set_color(c_red);
+    if (global.porta_liberada)
+    {
+        draw_text(_cx, _cy + _linha * 6,
+            "STATUS: PORTA ABERTA");
+    }
+    else
+    {
+        draw_text(_cx, _cy + _linha * 6,
+            "STATUS: PORTA FECHADA");
+    }
+
+    // =================================
+    // DIREITA: AREA DE RESPOSTA
+    // =================================
+    var _rx = _meio + _pad;
+    var _ry = _y1 + 60;
+
+    draw_set_color(c_white);
+    draw_text(_rx, _ry,
+        "Altere o valor da porta para 1.");
+
+    draw_set_color(c_aqua);
+    draw_text(_rx, _ry + 32,
+        "Digite seu codigo:");
+
+    // CAIXA DE DIGITACAO
+    draw_set_color(make_color_rgb(8, 12, 16));
+    draw_rectangle(
+        _rx - 4, _ry + 58,
+        _x2 - _pad, _ry + 100, false
+    );
+
+    draw_set_color(c_white);
+    draw_text(_rx + 4, _ry + 66,
+        "C> " + codigo_digitado + "_");
+
+    // =================================
+    // HISTORICO / OUTPUT
+    // =================================
+    draw_set_color(c_aqua);
+    draw_text(_rx, _ry + 120, "OUTPUT:");
+
+    var _total = array_length(historico_terminal);
+    var _altura_linha = 22;
+    var _yout = _ry + 150;
+    var _limite = _y2 - 100;
+
+    var _max = max(0,
+        floor((_limite - _yout) / _altura_linha));
+
+    var _inicio = max(0, _total - _max);
+
+    for (var i = _inicio; i < _total; i++)
+    {
+        if (string_pos("ERRO", historico_terminal[i]) > 0)
+        {
+            draw_set_color(c_red);
+        }
+        else
+        {
+            draw_set_color(c_lime);
+        }
+
+        draw_text(_rx, _yout, historico_terminal[i]);
+        _yout += _altura_linha;
+    }
+
+    // INSTRUCOES
+    draw_set_color(c_gray);
+    draw_text(_x1 + _pad, _y2 - 32,
+        "ENTER: executar    ESC: sair");
+
+    draw_set_alpha(1);
+    draw_set_color(c_white);
+}
