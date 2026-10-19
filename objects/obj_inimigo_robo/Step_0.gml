@@ -1,5 +1,7 @@
 var velocidade = 2.5;
 
+if(!global.jogo_pausado) {
+
 if (!place_meeting(x, y, obj_jogador)) {
     
     if (obj_jogador.x > x) {
@@ -22,10 +24,12 @@ else {
     else if (direcao == -1) {
         sprite_index = spr_robo_paradoE;	
     }
+	
+}
     
  // --- EVENTO STEP DO obj_inimigo_robo ---
 
-// 1. Sempre verifica se o jogador existe na sala antes de acessar as variáveis dele
+
 if (instance_exists(obj_jogador)) 
 {
   

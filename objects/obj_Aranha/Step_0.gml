@@ -39,7 +39,7 @@ else
     }
 }
 
-if(place_meeting(x+velocidade*direcao,y,colisao)) {
+if(place_meeting(x+velocidade*direcao,y,colisao) || place_meeting(x+velocidade*direcao,y,obj_apoio)) {
 	andando = false;	
 }
 

@@ -41,48 +41,100 @@ if (ativo)
 
     // TITULOS
     draw_set_color(c_lime);
-    draw_text(_x1 + _pad, _y1 + 12,
-        "CODIGO DO SISTEMA");
+
+    if (tipo_computador == 1)
+    {
+        draw_text(_x1 + _pad, _y1 + 12,
+            "CODIGO DO SISTEMA");
+    }
+    else
+    {
+        draw_text(_x1 + _pad, _y1 + 12,
+            "SISTEMA DE SEGURANCA");
+    }
 
     draw_set_color(c_aqua);
     draw_text(_meio + _pad, _y1 + 12,
         "SUA SOLUCAO");
 
-    // =================================
-    // ESQUERDA: CODIGO ORIGINAL
-    // =================================
+    // POSICAO DO CODIGO
     var _cx = _x1 + _pad;
     var _cy = _y1 + 60;
 
-    draw_set_color(c_gray);
-    draw_text(_cx, _cy,
-        "// Controle da porta");
-
-    draw_set_color(c_white);
-    draw_text(_cx, _cy + _linha,
-        "int porta = 0;");
-
-    draw_text(_cx, _cy + _linha * 2,
-        "if (porta == 1) {");
-
-    draw_set_color(c_lime);
-    draw_text(_cx, _cy + _linha * 3,
-        "    abrir_porta();");
-
-    draw_set_color(c_white);
-    draw_text(_cx, _cy + _linha * 4,
-        "}");
-
-    draw_set_color(c_red);
-    if (global.porta_liberada)
+    // =================================
+    // COMPUTADOR 1: CONTROLE DA PORTA
+    // =================================
+    if (tipo_computador == 1)
     {
-        draw_text(_cx, _cy + _linha * 6,
-            "STATUS: PORTA ABERTA");
+        draw_set_color(c_gray);
+        draw_text(_cx, _cy,
+            "// Controle da porta");
+
+        draw_set_color(c_white);
+        draw_text(_cx, _cy + _linha,
+            "int porta = 0;");
+
+        draw_text(_cx, _cy + _linha * 2,
+            "if (porta == 1) {");
+
+        draw_set_color(c_lime);
+        draw_text(_cx, _cy + _linha * 3,
+            "    abrir_porta();");
+
+        draw_set_color(c_white);
+        draw_text(_cx, _cy + _linha * 4,
+            "}");
+
+        if (global.porta_liberada)
+        {
+            draw_set_color(c_lime);
+            draw_text(_cx, _cy + _linha * 6,
+                "STATUS: CODIGO SUCESSIVO");
+        }
+        else
+        {
+            draw_set_color(c_red);
+            draw_text(_cx, _cy + _linha * 6,
+                "STATUS: CODIGO FALHO");
+        }
     }
-    else
+
+    // =================================
+    // COMPUTADOR 2: CONTROLE DO ALARME
+    // =================================
+    else if (tipo_computador == 2)
     {
-        draw_text(_cx, _cy + _linha * 6,
-            "STATUS: PORTA FECHADA");
+        draw_set_color(c_gray);
+        draw_text(_cx, _cy,
+            "// Controle da porta");
+
+        draw_set_color(c_white);
+        draw_text(_cx, _cy + _linha,
+            "int chave = 0;");
+
+        draw_text(_cx, _cy + _linha * 2,
+            "if (chave == 1) {");
+
+        draw_set_color(c_lime);
+        draw_text(_cx, _cy + _linha * 3,
+            "    abrir_porta();");
+
+        draw_set_color(c_white);
+        draw_text(_cx, _cy + _linha * 4,
+            "}");
+
+        if (global.chave_liberada)
+        {
+            draw_set_color(c_lime);
+            draw_text(_cx, _cy + _linha * 6,
+                "STATUS: CODIGO SUCESSIVO");
+        }
+        else
+        {
+            draw_set_color(c_red);
+            draw_text(_cx, _cy + _linha * 6,
+                "STATUS: CODIGO FALHO");
+        }
     }
 
     // =================================
@@ -92,8 +144,17 @@ if (ativo)
     var _ry = _y1 + 60;
 
     draw_set_color(c_white);
-    draw_text(_rx, _ry,
-        "Altere o valor da porta para 1.");
+
+    if (tipo_computador == 1)
+    {
+        draw_text(_rx, _ry,
+            "Altere o valor da porta para 1.");
+    }
+    else
+    {
+        draw_text(_rx, _ry,
+            "Altere o valor da chave para 1.");
+    }
 
     draw_set_color(c_aqua);
     draw_text(_rx, _ry + 32,
@@ -111,7 +172,7 @@ if (ativo)
         "C> " + codigo_digitado + "_");
 
     // =================================
-    // HISTORICO / OUTPUT
+    // OUTPUT
     // =================================
     draw_set_color(c_aqua);
     draw_text(_rx, _ry + 120, "OUTPUT:");
@@ -128,7 +189,8 @@ if (ativo)
 
     for (var i = _inicio; i < _total; i++)
     {
-        if (string_pos("ERRO", historico_terminal[i]) > 0)
+        if (string_pos(
+            "ERRO", historico_terminal[i]) > 0)
         {
             draw_set_color(c_red);
         }

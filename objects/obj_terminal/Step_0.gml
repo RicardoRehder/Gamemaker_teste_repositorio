@@ -1,32 +1,16 @@
-var _jogador = instance_find(obj_jogador, 0);
-
-// TERMINAL FECHADO
 if (!ativo)
 {
-    if (_jogador != noone)
-    {
-        if (point_distance(x, y, _jogador.x, _jogador.y) < 64
-        && keyboard_check_pressed(ord("E")))
-        {
-            ativo = true;
-            global.terminal_ativo = true;
-
-            keyboard_string = "";
-            codigo_digitado = "";
-        }
-    }
-
     exit;
 }
 
-// AGUARDA SOLTAR A TECLA E
-if (keyboard_check(ord("E")))
+// Aguarda soltar E para evitar digitação indesejada
+if (keyboard_check(ord("E")) && codigo_digitado == "")
 {
     keyboard_string = "";
     exit;
 }
 
-// FECHAR COM ESC
+// Fechar com ESC
 if (keyboard_check_pressed(vk_escape))
 {
     ativo = false;
@@ -34,13 +18,14 @@ if (keyboard_check_pressed(vk_escape))
 
     codigo_digitado = "";
     keyboard_string = "";
+
     exit;
 }
 
-// CAPTURAR TEXTO
+// Capturar o texto digitado
 codigo_digitado = keyboard_string;
 
-// EXECUTAR COM ENTER
+// Executar com ENTER
 if (keyboard_check_pressed(vk_enter))
 {
     var _codigo = string_trim(codigo_digitado);

@@ -25,8 +25,8 @@
   "nineSlice":null,
   "origin":0,
   "parent":{
-    "name":"05_10_JOGO_01.yyz",
-    "path":"05_10_JOGO_01.yyz.yyp",
+    "name":"terminais & computadores",
+    "path":"folders/terminais & computadores.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

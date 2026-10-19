@@ -27,8 +27,8 @@
   ],
   "name":"tela_inicial",
   "parent":{
-    "name":"05_10_JOGO_01.yyz",
-    "path":"05_10_JOGO_01.yyz.yyp",
+    "name":"cenarios",
+    "path":"folders/cenarios.yy",
   },
   "parentRoom":null,
   "physicsSettings":{
