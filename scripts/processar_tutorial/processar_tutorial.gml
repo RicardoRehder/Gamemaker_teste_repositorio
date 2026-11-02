@@ -2,12 +2,16 @@ function processar_tutorial(_codigo) {
     
 
     _codigo = string_trim(_codigo);
+	_codigo = string_replace_all(_codigo, " ", "");
+	_codigo = string_replace_all(_codigo, "\n", "");
+	_codigo = string_replace_all(_codigo, "\r", "");
+	_codigo = string_replace_all(_codigo, "\t", "");
     
     if (_codigo == "") return;
     
     array_push(historico_terminal, "C> " + _codigo);
     
-    if (string_pos("Q", _codigo) > 0 || string_pos("attack", _codigo) > 0) {
+    if (string_pos("if(tecla=='Q'){", _codigo) > 0 && string_pos("attack();}", _codigo) > 0) {
         
         array_push(historico_terminal, "-> Compilado com sucesso: Tecla Q ativada!");
         
